@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Notification Center
+{% endblock %}
+
+{% block body %}
+<h1>Notification Center</h1>
+<br>
+<div class="table-container">
+    <form method="post" action="{% url 'service-bulk-action' %}">
+    {% csrf_token %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Service</th>
+                <th scope="col">Branch</th>
+                <th scope="col">Expiration</th>
+                <th scope="col">Subscriber</th>
+                <th scope="col">Notifying</th>
+                <th scope="col"></th>
+                </tr>
+        </thead>
+        <tbody>
+        {% for service in services %}
+        <tr scope="row">
+            <td><input type="checkbox" class="service-checkbox" name="service_ids" value="{{service.id}}"></td>
+            <!-- <td><input type="checkbox" id="checkbox_{{server.id}}" name="checkbox_{{server.id}}"></td> -->
+            <td><a href="{% url 'service-detail' service.id %}">{{ service.service_name }}</a></td>
+            <td>{{ service.branch }}</td>
+            <td>{{ service.expired_on }}</td>
+            <td>
+                {% for subscription in service.service_subscriptions.all %}
+                {{ subscription.subscriber.name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        No subscribers
+                {% endfor %}
+            </td>
+            <td>{{ service.notifying }}</td>
+            <td>
+                <a href="{% url 'service-update' service.id %}" class="btn btn-outline-secondary">Update</a>
+                <!-- <a href="{% url 'service-delete' service.id %}" class="btn btn-outline-danger">Delete</a> -->
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="button-container">
+        <a href="{% url 'service-create' %}" class="btn btn-primary" role="button">
+            Add New Service
+        </a>
+
+        <button id="btn-item-notify" type="submit" name="action" value="notify" class="btn btn-outline-success" disabled>Notifying</button>
+        <button id="btn-item-delete" type="submit" name="action" value="delete" class="btn btn-outline-danger" disabled>Delete Service</button>
+    
+    </div>
+    </form>
+</div>
+
+
+
+
+{% endblock %}

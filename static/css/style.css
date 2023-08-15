@@ -1,0 +1,13 @@
+.table-container {
+    width: 60%; /* adjust to suit your needs */
+    margin: 0 auto; /* centers the container */
+    overflow: auto; /* adds scrollbar if table is wider than container */
+}
+
+
+table {
+    width: 100%;
+}
+h1 {
+    text-align: center;
+}

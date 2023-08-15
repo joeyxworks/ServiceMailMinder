@@ -1,0 +1,7 @@
+db*
+notification_center/settings.py
+notification_center/__pycache__/
+webapp/__pycache__/
+webapp/management/commands/__pycache__/
+webapp/migrations/__pycache__/
+nc_user/

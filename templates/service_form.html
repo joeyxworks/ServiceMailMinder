@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+<!-- {% load crispy_forms_tags %} -->
+
+{% block body %}
+
+<div class="container mt-5">
+    <div class="mb-3">
+        <a href="{% url 'service-list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Services</a>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2>Service Form</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.service_name.label_tag }}
+                    <input type="text" name="{{ form.service_name.name }}" id="{{ form.service_name.id_for_label }}" class="form-control" value="{{ form.service_name.value }}">
+                </div>
+                <br>
+                <!-- Repeat the pattern for other fields -->
+                <div class="form-group">
+                    {{ form.branch.label_tag }}
+                    <select name="{{ form.branch.name }}" id="{{ form.branch.id_for_label }}" class="form-control">
+                        <option value="DCMC">DCMC</option>
+                        <option value="DCMAP">DCMAP</option>
+                        <option value="EiM">EiM</option>
+                        <option value="DEGT">DEGT</option>
+                        <option value="DEMH">DEMH</option>
+                        <!-- <option value="branch-dexa">DEXA</option> -->
+                        <!-- ... add as many branches as you need ... -->
+                    </select>
+                    <!-- <input type="text" name="{{ form.branch.name }}" id="{{ form.branch.id_for_label }}" class="form-control" value="{{ form.branch.value }}"> -->
+                </div>
+                <br>
+                <div class="form-group">
+                    {{ form.expired_on.label_tag }}
+                    <input class="form-control" type="date" id="expired_on" name="expired_on" value="{{ form.expired_on.value|date:'Y-m-d' }}">
+                </div>
+                <br>
+                <div class="form-group">
+                    {{ form.notifying.label_tag }}
+                    <input type="checkbox" name="{{ form.notifying.name }}" id="{{ form.notifying.id_for_label }}" {% if form.notifying.value %}checked{% endif %}>
+                </div>
+                <!-- <div class="form-group">
+                    {{ form.subscribers.label_tag }}
+                    {{ form.subscribers }}
+                </div> -->
+                <br>
+                <div class="form-group">
+                    {{ form.service_provider.label_tag }}
+                    <input type="text" name="{{ form.service_provider.name }}" id="{{ form.service_provider.id_for_label }}" class="form-control" value="{{ form.service_provider.value }}">
+                </div>
+                <br>
+                <div class="form-group">
+                    {{ form.sales_email.label_tag }}
+                    <input type="text" name="{{ form.sales_email.name }}" id="{{ form.sales_email.id_for_label }}" class="form-control" value="{{ form.sales_email.value }}">
+                </div>
+                <!-- ... other fields ... -->
+                <br>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

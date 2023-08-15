@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ service.service_name }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="mb-3">
+        <a href="{% url 'service-list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Services</a>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2>{{ service.service_name }}</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Branch:</strong> {{ service.branch }}</p>
+            <p><strong>Expiration:</strong> {{ service.expired_on }}</p>
+            <p><strong>Notifying:</strong> {{ service.notifying }}</p>
+            <p><strong>Service provider:</strong> {{ service.service_provider }}</p>
+            <p><strong>Sales email:</strong> <a href="mailto:{{ service.sales_email }}">{{ service.sales_email }}</a></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h5>Subscribers:</h5></li>
+            {% for subscription in service.service_subscriptions.all %}
+                <li class="list-group-item"><a href="mailto:{{ subscription.subscriber.email }}">{{ subscription.subscriber.name }}</a></li>
+            {% empty %}
+                <li class="list-group-item">No subscribers</li>
+            {% endfor %}
+        </ul>
+        <div class="card-footer">
+            <a href="{% url 'service-update' service.id %}" class="btn btn-primary">Edit Service</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
